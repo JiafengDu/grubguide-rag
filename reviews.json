@@ -1,0 +1,144 @@
+{
+    "reviews": [
+      {
+        "professor": "Dr. Sarah Johnson",
+        "subject": "Physics",
+        "grade": "A",
+        "star": 5,
+        "review": "Dr. Johnson's lectures are incredibly engaging. She explains complex concepts with clarity and enthusiasm."
+      },
+      {
+        "professor": "Prof. Michael Chen",
+        "subject": "Computer Science",
+        "grade": "B+",
+        "star": 4,
+        "review": "Prof. Chen is knowledgeable, but his assignments can be quite challenging. Office hours are very helpful."
+      },
+      {
+        "professor": "Dr. Emily Rodriguez",
+        "subject": "Biology",
+        "grade": "A-",
+        "star": 5,
+        "review": "Dr. Rodriguez's passion for biology is contagious. Her labs are well-organized and interesting."
+      },
+      {
+        "professor": "Prof. David Thompson",
+        "subject": "History",
+        "grade": "B",
+        "star": 3,
+        "review": "Prof. Thompson knows his subject well, but his lectures can be dry at times. Exams are fair."
+      },
+      {
+        "professor": "Dr. Lisa Patel",
+        "subject": "Psychology",
+        "grade": "A",
+        "star": 5,
+        "review": "Dr. Patel creates a supportive learning environment. Her research projects are thought-provoking."
+      },
+      {
+        "professor": "Prof. Robert Wilson",
+        "subject": "Mathematics",
+        "grade": "C+",
+        "star": 2,
+        "review": "Prof. Wilson moves too quickly through difficult concepts. More practice problems would be helpful."
+      },
+      {
+        "professor": "Dr. Amanda Lee",
+        "subject": "Chemistry",
+        "grade": "B+",
+        "star": 4,
+        "review": "Dr. Lee's experiments are fascinating. She's always willing to help students outside of class."
+      },
+      {
+        "professor": "Prof. James Brown",
+        "subject": "English Literature",
+        "grade": "A-",
+        "star": 4,
+        "review": "Prof. Brown's analysis of texts is insightful. Discussions in class are lively and engaging."
+      },
+      {
+        "professor": "Dr. Maria Garcia",
+        "subject": "Sociology",
+        "grade": "B",
+        "star": 3,
+        "review": "Dr. Garcia assigns interesting readings, but her lectures can be somewhat disorganized."
+      },
+      {
+        "professor": "Prof. Thomas Wright",
+        "subject": "Economics",
+        "grade": "A",
+        "star": 5,
+        "review": "Prof. Wright makes economics accessible and relevant. His real-world examples are very helpful."
+      },
+      {
+        "professor": "Dr. Rachel Kim",
+        "subject": "Art History",
+        "grade": "B+",
+        "star": 4,
+        "review": "Dr. Kim's passion for art is evident. Her slide presentations are well-curated and informative."
+      },
+      {
+        "professor": "Prof. Alexander Ivanov",
+        "subject": "Political Science",
+        "grade": "C",
+        "star": 2,
+        "review": "Prof. Ivanov's lectures are often confusing. The workload is excessive for an introductory course."
+      },
+      {
+        "professor": "Dr. Olivia Martinez",
+        "subject": "Environmental Science",
+        "grade": "A-",
+        "star": 4,
+        "review": "Dr. Martinez organizes great field trips. Her exams are challenging but fair."
+      },
+      {
+        "professor": "Prof. William Taylor",
+        "subject": "Philosophy",
+        "grade": "B",
+        "star": 3,
+        "review": "Prof. Taylor encourages critical thinking, but sometimes goes off on tangents during lectures."
+      },
+      {
+        "professor": "Dr. Jennifer Lee",
+        "subject": "Linguistics",
+        "grade": "A",
+        "star": 5,
+        "review": "Dr. Lee's enthusiasm for language is infectious. Her interactive teaching style is very effective."
+      },
+      {
+        "professor": "Prof. Daniel Murphy",
+        "subject": "Business Administration",
+        "grade": "B-",
+        "star": 3,
+        "review": "Prof. Murphy has industry experience, but his grading can be inconsistent. Group projects are valuable."
+      },
+      {
+        "professor": "Dr. Sophia Nguyen",
+        "subject": "Neuroscience",
+        "grade": "A",
+        "star": 5,
+        "review": "Dr. Nguyen explains complex brain functions clearly. Her research opportunities for students are excellent."
+      },
+      {
+        "professor": "Prof. Christopher Adams",
+        "subject": "Music Theory",
+        "grade": "B+",
+        "star": 4,
+        "review": "Prof. Adams is a skilled musician and teacher. The ear training exercises are particularly helpful."
+      },
+      {
+        "professor": "Dr. Elizabeth White",
+        "subject": "Anthropology",
+        "grade": "A-",
+        "star": 4,
+        "review": "Dr. White's lectures are fascinating. The course readings can be dense, but are well-chosen."
+      },
+      {
+        "professor": "Prof. Andrew Clark",
+        "subject": "Mechanical Engineering",
+        "grade": "C+",
+        "star": 2,
+        "review": "Prof. Clark's projects are interesting, but his explanations of concepts are often unclear."
+      }
+    ]
+  }

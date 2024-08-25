@@ -26,7 +26,28 @@ export default function Home() {
           ...messages,
           {role: "user", content: message},
         ]),
-      });
+      }).then( async (res) => {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+
+        let result = "";
+        return reader.read().then(function processText({done, value}) {
+          if (done) {
+            return;
+          }
+          result += decoder.decode(value, {stream: true});
+          const lines = result.split("\n");
+          lines.forEach((line) => {
+            const data = JSON.parse(line);
+            setMessages((messages) => [
+              ...messages,
+              {role: "assistant", content: data.choices[0].delta.content},
+            ]);
+          });
+          result = lines[lines.length - 1];
+          return reader.read().then(processText);
+        })
+    });
       setMessage("");
     };
   return();

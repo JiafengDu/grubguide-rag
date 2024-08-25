@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Pinecone } from "@pinecone-database/pinecone";
 import OpenAI from "openai";
+import { readableStreamAsyncIterable } from "openai/streaming";
 
 const systemPrompt = `
 You are an AI assistant specializing in helping students find the best professors for their courses. 
@@ -40,5 +41,63 @@ export async function post(request) {
     const pc = new Pinecone({
         apiKey : process.env.PINECONE_API_KEY,
     });
-    const index = pc.index('rag').namespace('ns1    ');
+    const index = pc.index('rag').namespace('ns1');
+    const openai = new OpenAI();
+    
+    const text = data[data.length - 1].content;
+    const embeddings = await OpenAI.Embeddings.create({
+        model: "text-embedding-v1",
+        input: text,
+        encoding_format: 'float',
+    });
+
+    const results = await index.query({
+        top_k: 3,
+        includeMetadata: true,
+        vector: embeddings.data[0].embedding
+    });
+
+    let resultString = '\n\nReturning results from vector db: \n';
+    results.matches.forEach((match) => {
+        resultString += match.text + `\n
+        Professor: ${match.id}
+        Subject: ${match.metadata.subject}
+        Star: ${match.metadata.star}
+        review: ${match.metadata.review}
+        \n\n`;
+    });
+
+    const lastMessage = data[data.length - 1];
+    const lastMessageContent = lastMessage.content + resultString;
+    const lastDataWithoutLastMessage = data.slice(0, data.length - 1);
+    const completion = await openai.Completion.create({
+       message:[
+        {role:'system', content: systemPrompt},
+        ...lastDataWithoutLastMessage,
+        {role:'user', content: lastMessageContent}
+       ],
+       model: "gpt-3.5-turbo",
+       stream: true,
+    });
+
+    const stream = readableStream({
+        async start(controller) {
+            try {
+                for await (const chunk of completion) {
+                    const content = chunk.choices[0].delta?.content;
+                    if (content) {
+                        const text = encoder.encode(content);
+                        controller.enqueue(text);
+                    }
+                }
+            }
+            catch (err) {
+                controller.error(err);
+            } finally {
+                controller.close();
+            }
+        },
+    });
+
+    return new NextResponse(stream);
 }

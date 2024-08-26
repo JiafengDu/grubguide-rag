@@ -10,6 +10,8 @@ export default function Home() {
     },
   ])
   const [message, setMessage] = useState('')
+
+
   const sendMessage = async () => {
     setMessage('')
     setMessages((messages) => [
@@ -17,7 +19,6 @@ export default function Home() {
       {role: 'user', content: message},
       {role: 'assistant', content: ''},
     ])
-  
     const response = fetch('/api/chat', {
       method: 'POST',
       headers: {

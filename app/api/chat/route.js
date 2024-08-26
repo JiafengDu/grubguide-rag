@@ -36,7 +36,7 @@ Always respect privacy and avoid sharing any personal or sensitive information a
 Begin each response by clearly stating that you're providing information based on available reviews and ratings, and that individual experiences may vary.
 `;
 
-export async function post(request) {
+export async function POST(request) {
     const data = await request.json();
     const pc = new Pinecone({
         apiKey : process.env.PINECONE_API_KEY,
@@ -45,33 +45,34 @@ export async function post(request) {
     const openai = new OpenAI();
     
     const text = data[data.length - 1].content;
-    const embeddings = await OpenAI.Embeddings.create({
-        model: "text-embedding-v1",
+    const embeddings = await openai.embeddings.create({
+        model: "text-embedding-3-small",
         input: text,
         encoding_format: 'float',
     });
 
     const results = await index.query({
-        top_k: 3,
+        topK: 5,
         includeMetadata: true,
-        vector: embeddings.data[0].embedding
+        vector: embeddings.data[0].embedding,
     });
 
-    let resultString = '\n\nReturning results from vector db: \n';
+    let resultString = '';
     results.matches.forEach((match) => {
-        resultString += match.text + `\n
+        resultString += `
         Professor: ${match.id}
         Subject: ${match.metadata.subject}
         Star: ${match.metadata.star}
-        review: ${match.metadata.review}
+        Review: ${match.metadata.stars}
         \n\n`;
     });
 
     const lastMessage = data[data.length - 1];
     const lastMessageContent = lastMessage.content + resultString;
     const lastDataWithoutLastMessage = data.slice(0, data.length - 1);
-    const completion = await openai.Completion.create({
-       message:[
+
+    const completion = await openai.chat.completions.create({
+       messages:[
         {role:'system', content: systemPrompt},
         ...lastDataWithoutLastMessage,
         {role:'user', content: lastMessageContent}
@@ -80,11 +81,12 @@ export async function post(request) {
        stream: true,
     });
 
-    const stream = readableStream({
+    const stream = new ReadableStream({
         async start(controller) {
+            const encoder = new TextEncoder()
             try {
                 for await (const chunk of completion) {
-                    const content = chunk.choices[0].delta?.content;
+                    const content = chunk.choices[0]?.delta?.content;
                     if (content) {
                         const text = encoder.encode(content);
                         controller.enqueue(text);
@@ -98,6 +100,5 @@ export async function post(request) {
             }
         },
     });
-
     return new NextResponse(stream);
 }

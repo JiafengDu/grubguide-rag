@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(".env.local")
 from pinecone import Pinecone, ServerlessSpec
 from openai import OpenAI
 import os
@@ -38,7 +38,7 @@ for review in data["reviews"]:
             "metadata": {
                 "review": review["review"],
                 "subject": review["subject"],
-                "stars": review["stars"],
+                "star": review["star"],
             }
         }
     )

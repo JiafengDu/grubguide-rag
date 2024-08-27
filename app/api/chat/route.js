@@ -57,15 +57,19 @@ export async function POST(request) {
         vector: embeddings.data[0].embedding,
     });
 
-    let resultString = '';
+    let resultString = "<CONTEXT>\n";
     results.matches.forEach((match) => {
         resultString += `
         Professor: ${match.id}
         Subject: ${match.metadata.subject}
         Star: ${match.metadata.star}
-        Review: ${match.metadata.stars}
+        Review: ${match.metadata.review}
         \n\n`;
     });
+    resultString += `<\n\\CONTEXT>`;
+
+    console.log(resultString);
+
 
     const lastMessage = data[data.length - 1];
     const lastMessageContent = lastMessage.content + resultString;
@@ -77,7 +81,7 @@ export async function POST(request) {
         ...lastDataWithoutLastMessage,
         {role:'user', content: lastMessageContent}
        ],
-       model: "gpt-3.5-turbo",
+       model: "gpt-4o-mini",
        stream: true,
     });
 

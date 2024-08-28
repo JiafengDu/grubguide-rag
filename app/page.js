@@ -1,16 +1,35 @@
 'use client'
-import { Box, Button, Stack, TextField } from '@mui/material'
-import { useState } from 'react'
+import { Box, Button, Stack, TextField, AppBar, Toolbar, Typography } from '@mui/material'
+import { useState, useRef, useEffect } from 'react'
+import Markdown from 'react-markdown'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 
 export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hi! I'm the Rate My Professor support assistant. How can I help you today?`,
+      content: `Hello, let me help you figure out where to eat. Ask me anything!`,
     },
   ])
   const [message, setMessage] = useState('')
+  
+  const messagesEndRef = useRef(null)
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+  };
 
   const sendMessage = async () => {
     setMessage('')
@@ -47,65 +66,94 @@ export default function Home() {
       })
     })
   }
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#13294B', // Primary color
+      },
+      secondary: {
+        main: '#ff5f05', // Secondary color
+      },
+      background: {
+        default: '#', // Background color
+      },
+    },
+  });
+
   return (
-    <Box
-      width="100vw"
-      height="100vh"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Stack
-        direction={'column'}
-        width="500px"
-        height="700px"
-        border="1px solid black"
-        p={2}
-        spacing={3}
+    <ThemeProvider theme={theme}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
+            Where Should I Eat? (Urbana-Champaign Edition)
+          </Typography>
+          <Button color="inherit"> :^D</Button>
+        </Toolbar>
+      </AppBar>
+      <Box
+        width="100vw"
+        height="100vh"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        bgcolor="background.default"
       >
         <Stack
           direction={'column'}
-          spacing={2}
-          flexGrow={1}
-          overflow="auto"
-          maxHeight="100%"
+          width="500px"
+          height="700px"
+          border="1px solid black"
+          p={2}
+          spacing={3}
+          bgcolor={'dark blue'}
         >
-          {messages.map((message, index) => (
-            <Box
-              key={index}
-              display="flex"
-              justifyContent={
-                message.role === 'assistant' ? 'flex-start' : 'flex-end'
-              }
-            >
+          <Stack
+            direction={'column'}
+            spacing={2}
+            flexGrow={1}
+            overflow="auto"
+            maxHeight="100%"
+          >
+            {messages.map((message, index) => (
               <Box
-                bgcolor={
-                  message.role === 'assistant'
-                    ? 'primary.main'
-                    : 'secondary.main'
+                key={index}
+                display="flex"
+                justifyContent={
+                  message.role === 'assistant' ? 'flex-start' : 'flex-end'
                 }
-                color="white"
-                borderRadius={16}
-                p={3}
               >
-                {message.content}
+                <Box
+                  bgcolor={
+                    message.role === 'assistant'
+                      ? 'primary.main'
+                      : 'secondary.main'
+                  }
+                  color="white"
+                  borderRadius={16}
+                  p={3}
+                >
+                  <Markdown>{message.content}</Markdown>
+                </Box>
               </Box>
-            </Box>
-          ))}
+            ))}
+            <div ref={messagesEndRef} />
+          </Stack>
+          <Stack direction={'row'} spacing={2}>
+            <TextField
+              label="Message"
+              fullWidth
+              value={message}
+              onKeyPress={handleKeyPress}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <Button variant="contained" onClick={sendMessage}>
+              Send
+            </Button>
+          </Stack>
         </Stack>
-        <Stack direction={'row'} spacing={2}>
-          <TextField
-            label="Message"
-            fullWidth
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-          <Button variant="contained" onClick={sendMessage}>
-            Send
-          </Button>
-        </Stack>
-      </Stack>
-    </Box>
+      </Box>
+    </ThemeProvider>
   )     
 }

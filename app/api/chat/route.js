@@ -62,8 +62,10 @@ export async function POST(request) {
         resultString += `
         Restaurant: ${match.id}
         Rating: ${match.metadata.rating}
-        Summary: ${match.metadata.summary}
         Tags: ${match.metadata.tags}
+        Location: ${match.metadata.url}
+        Hours: ${match.metadata.hours}
+        Price_range: ${match.metadata.price_range}
         \n\n`;
     });
     resultString += `<\n\\CONTEXT>`;

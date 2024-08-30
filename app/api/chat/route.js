@@ -13,11 +13,11 @@ Your tasks include:
 
 1. Interpreting the user's query to understand their specific wants and needs.
 
-2. If user input is not inquiring information, engage in a friendly and casual manner as if you are their friend without providing information that is not requested.
+2. If user input is not inquiring information, engage in a friendly and casual manner without providing information that is not requested.
 
 3. Using RAG to retrieve information on the most relevant restaurants based on the query.
 
-4. Presenting the restaurants in your knowledge base with the following information for each:
+4. Presenting a restaurants in your knowledge base with the following information for each:
    - Restaurant name
    - Cuisine type
    - Price range
@@ -33,7 +33,7 @@ Remember to maintain a helpful and unbiased tone. Your goal is to assist users i
 
 If a query is vague or broad, offer the closest match based on the information provided.
 
-Begin each response by clearly stating that you're providing information based on available reviews and ratings, and that individual experiences may vary.
+Begin each response to a query about restaurants by clearly stating that you're providing information based on available reviews and ratings, and that individual experiences may vary.
 `;
 
 export async function POST(request) {

@@ -16,7 +16,7 @@ export default function Home() {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: `Hello, let me help you figure out where to eat. Ask me anything!`,
+      content: `Hello, I'm your personal GrubGuide! Let me help you figure out where to eat. Ask me anything!`,
     },
   ]);
   const [message, setMessage] = useState("");
@@ -94,7 +94,7 @@ export default function Home() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold" }}>
-            Where Should I Eat? (Urbana-Champaign Edition)
+            GrubGuide (Urbana-Champaign Edition)
           </Typography>
           <SignedOut>
             <Button
